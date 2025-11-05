@@ -1,0 +1,37 @@
+#include <stdio.h>
+union float_ieee754 {
+	float real;
+	struct {
+		unsigned int mantisa:23;
+		unsigned int exponente:8;
+		unsigned int signo:1;
+	} ieee754;
+	unsigned int entero;
+};
+void cargar_real (union float_ieee754 *);
+void imprimir_ieee754 (union float_ieee754);
+void imprimir_32bits (unsigned int);
+int main (void) {
+	union float_ieee754 dato;
+	cargar_real(&dato); // Respuesta 1.b
+	imprimir_ieee754(dato); // Respuesta 1.d
+	imprimir_32bits(dato.entero); // Respuesta 1.f
+	return 0;
+}
+void cargar_real (union float_ieee754 *p) {
+	printf("Ingrese un n�mero real: ");
+	scanf("%f", &p->real); // Respuesta 1.a
+}
+void imprimir_ieee754 (union float_ieee754 real) {
+	printf("Signo: %u\n", real.ieee754.signo); // Respuestas 1.c
+	printf("Exponente: %u\n", real.ieee754.exponente);
+	printf("Mantisa: %u\n", real.ieee754.mantisa);
+}
+void imprimir_32bits (unsigned int entero) {
+	unsigned int mascara = 1 << 31;
+	for (int i = 0; i < 32; i++) {
+		printf("%d", entero & mascara ? 1 : 0 );
+		mascara >>= 1; // Respuesta 1.e
+	}
+	printf("\n");
+}
