@@ -1,0 +1,33 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct punto2d { // Respuesta 2.a
+ float x;
+ float y;
+};
+struct segmentos { // Respuesta 2.b
+ int cantidad;
+ struct punto2d * punto;
+};
+void cargar_puntos (struct segmentos);
+void imprimir_poly_linea (struct segmentos);
+int main (void) {
+ int n = 5;
+ struct segmentos poly_linea = {0};
+ poly_linea.cantidad = n;
+ poly_linea.punto = malloc(n * sizeof(struct punto2d)); // Respuesta 2.c
+ cargar_puntos(poly_linea);
+ imprimir_poly_linea(poly_linea);
+ free(poly_linea.punto);
+ return 0;
+}
+void cargar_puntos (struct segmentos seg) {
+ for (int i = 0; i < seg.cantidad; i++) {
+ printf("Ingrese coordenadas x e y separadas por un espacio: ");
+ scanf("%f %f", &seg.punto[i].x, &seg.punto[i].y);
+ }
+}
+void imprimir_poly_linea (struct segmentos seg) {
+ for (int i = 0; i < seg.cantidad; i++) {
+ printf("(%.2f, %.2f)\n", seg.punto[i].x, seg.punto[i].y); // Respuesta 2.d
+ }
+}
